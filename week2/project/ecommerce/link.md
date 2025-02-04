@@ -1,0 +1,1 @@
+https://mystored.netlify.app/
