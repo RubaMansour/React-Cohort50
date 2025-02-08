@@ -1,6 +1,8 @@
-import React from "react";
-
 const CategoryList = ({ categories, activeCategory, onCategoryChange }) => {
+  const cleanedCategories = categories.map((category) =>
+    category.replace("FAKE: ", "")
+  );
+
   return (
     <div className="category-list">
       <button
@@ -10,14 +12,14 @@ const CategoryList = ({ categories, activeCategory, onCategoryChange }) => {
         All
       </button>
 
-      {categories.map((category, index) => (
+      {cleanedCategories.map((category, index) => (
         <button
           key={index}
           onClick={() => onCategoryChange(category)}
           className={`category-btn ${activeCategory === category ? "active" : ""}`}
         >
-          {category.replace("FAKE: ", "")}{" "}
-      </button>
+          {category}
+        </button>
       ))}
     </div>
   );

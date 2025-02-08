@@ -1,6 +1,4 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
 import "./App.css";
 import productsData from "./fake-data/all-products";
 import categories from "./fake-data/all-categories";
@@ -14,8 +12,9 @@ function App() {
     activeCategory === "All"
       ? productsData
       : productsData.filter((product) => {
-          return product.category === activeCategory.replace("FAKE: ", "");
+        return product.category === activeCategory;
         });
+        
   return (
     <div className="app">
       <CategoryList
