@@ -1,45 +1,45 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
+import { useFavorites } from "../context/FavoritesContext";
+import useFetch from "../hooks/useFetch";
+import { FaHeart, FaRegHeart } from "react-icons/fa";
 
 const ProductDetail = () => {
   const { id } = useParams();
-  const [product, setProduct] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        const response = await fetch(`https://fakestoreapi.com/products/${id}`);
-        if (!response.ok) throw new Error("Failed to fetch product details");
-        const data = await response.json();
-        setProduct(data);
-      } catch (err) {
-        setError(err.message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchProduct();
-  }, [id]);
+  const { favorites, toggleFavorite } = useFavorites();
+  const { data: product, loading, error } = useFetch(`https://fakestoreapi.com/products/${id}`);
 
   if (loading) return <p>Loading product...</p>;
   if (error) return <p>{error}</p>;
 
   return (
     <div className="product-detail">
-      <img src={product.image} alt={product.title} className="product-image" />
+      <div className="product-image-container">
+        <img src={product.image} alt={product.title} className="product-image" />
+        <button
+          className="favorite-btn"
+          onClick={() => toggleFavorite(product.id)}
+        >
+          {favorites.includes(product.id) ? (
+            <FaHeart className="heart-icon filled" />
+          ) : (
+            <FaRegHeart className="heart-icon" />
+          )}
+        </button>
+      </div>
       <div className="product-info">
-        <h2 className="product-title">{product.title}</h2>
-        <p className="product-description">{product.description}</p>
-        <p className="product-price">Price: ${product.price}</p>
-        <p className="rating">
-          Rating: <span>{product.rating.rate}</span> ({product.rating.count} reviews)
-        </p>
+        <h2>{product.title}</h2>
+        <p>{product.description}</p>
+        <p>Price: ${product.price}</p>
       </div>
     </div>
   );
 };
 
 export default ProductDetail;
+
+
+
+
+
+

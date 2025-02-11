@@ -1,5 +1,3 @@
-import React from "react";
-
 const CategoryList = ({ activeCategory, onCategoryChange }) => {
   const categories = ["All", "electronics", "jewelery", "men's clothing", "women's clothing"];
 

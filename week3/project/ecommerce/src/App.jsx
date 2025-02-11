@@ -1,30 +1,27 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import CategoryList from "./CategoryList";
-import ProductList from "./ProductList";
-import ProductDetail from "./ProductDetail";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { FavoritesProvider } from "./context/FavoritesContext";
+import { useState } from "react";
+import Navbar from "./components/Navbar";
+import CategoryList from "./components/CategoryList"; 
+import ProductList from "./components/ProductList";
+import ProductDetail from "./components/ProductDetail";
+import Favorites from "./pages/Favorites";
 
 const App = () => {
   const [activeCategory, setActiveCategory] = useState("All");
 
   return (
-    <Router>
-      <div className="app">
-     
+    <FavoritesProvider>
+      <Router>
+        <Navbar />
+        <CategoryList activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
         <Routes>
-          <Route
-            path="/"
-            element={
-              <>   <h1 className="app-title">Prouducts</h1>
-                <CategoryList activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
-                <ProductList activeCategory={activeCategory} />
-              </>
-            }
-          />
+          <Route path="/" element={<ProductList activeCategory={activeCategory} />} />
           <Route path="/product/:id" element={<ProductDetail />} />
+          <Route path="/favourites" element={<Favorites />} />
         </Routes>
-      </div>
-    </Router>
+      </Router>
+    </FavoritesProvider>
   );
 };
 
