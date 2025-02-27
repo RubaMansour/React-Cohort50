@@ -3,8 +3,8 @@ import { FavoritesProvider } from "./context/FavoritesContext";
 import { useState } from "react";
 import Navbar from "./components/Navbar";
 import CategoryList from "./components/CategoryList"; 
-import ProductList from "./components/ProductList";
-import ProductDetail from "./components/ProductDetail";
+import ProductList from "./pages/ProductList";
+import ProductDetail from "./pages/ProductDetail";
 import Favorites from "./pages/Favorites";
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
     <FavoritesProvider>
       <Router>
         <Navbar />
-        <CategoryList activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
+       
         <Routes>
           <Route path="/" element={<ProductList activeCategory={activeCategory} />} />
           <Route path="/product/:id" element={<ProductDetail />} />

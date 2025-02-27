@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useFavorites } from "../context/FavoritesContext";
 import useFetch from "../hooks/useFetch";
-import { FaHeart, FaRegHeart } from "react-icons/fa";  
+import { FaHeart, FaRegHeart } from "react-icons/fa";
+import CategoryList from "../components/CategoryList";
 
-const ProductList = ({ activeCategory }) => {
-  const { favorites, toggleFavorite } = useFavorites(); 
+const ProductList = () => {
+  const { favorites, toggleFavorite } = useFavorites();
+  const [activeCategory, setActiveCategory] = useState("All");
+
   const url =
     activeCategory === "All"
       ? "https://fakestoreapi.com/products"
@@ -17,18 +20,18 @@ const ProductList = ({ activeCategory }) => {
   if (error) return <p>{error}</p>;
 
   return (
+    <><CategoryList activeCategory={activeCategory} onCategoryChange={setActiveCategory} />
     <div className="product-list">
+      
       {products.map((product) => (
         <div key={product.id} className="product-card">
           <Link to={`/product/${product.id}`}>
             <div className="product-image-container">
               <img src={product.image} alt={product.title} className="product-image" />
-              
-        
               <button
                 className="favorite-btn"
                 onClick={(e) => {
-                  e.preventDefault(); 
+                  e.preventDefault();
                   toggleFavorite(product.id);
                 }}
               >
@@ -44,6 +47,7 @@ const ProductList = ({ activeCategory }) => {
         </div>
       ))}
     </div>
+    </>
   );
 };
 

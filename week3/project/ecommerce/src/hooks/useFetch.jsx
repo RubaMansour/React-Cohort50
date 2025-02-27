@@ -11,6 +11,7 @@ const useFetch = (url) => {
     const fetchData = async () => {
       try {
         setLoading(true);
+        setError(null);  
         const response = await fetch(url);
         if (!response.ok) throw new Error("Failed to fetch data");
         const result = await response.json();
